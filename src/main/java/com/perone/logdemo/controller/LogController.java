@@ -1,8 +1,8 @@
 package com.perone.logdemo.controller;
 
-import com.perone.logdemo.log.PepeLog;
 import com.perone.logdemo.model.ModelResponse;
 import java.util.Objects;
+import lombok.CustomLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +12,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Controller
+@CustomLog
 public class LogController {
 
   @Autowired
@@ -19,13 +20,14 @@ public class LogController {
 
   @GetMapping("/execute")
   public ResponseEntity<ModelResponse> execute() {
-    String url = "https://run.mocky.io/v3/73100d29-a969-4eaf-ba18-1e3b9d84cc72";
+    String url = "https://run.mocky.io/v3/3ed37421-e6b2-459b-8852-bafa7a0e4832";
     ResponseEntity<ModelResponse> response = restTemplate.getForEntity(url, ModelResponse.class);
-
-    PepeLog.info(response);
+    log.info(response);
 
     if (response.getStatusCode().equals(HttpStatus.OK)) {
       if (Objects.nonNull(response.getBody())) {
+        log.info(response.getBody());
+
         return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
       } else {
         throw new InternalError("Could perform the request. No request body was found.");

@@ -1,15 +1,15 @@
 package com.perone.logdemo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.perone.logdemo.model.annotation.Sensitive;
+import com.perone.logdemo.log.annotation.SensitiveLog;
 import lombok.Getter;
 
 @Getter
-public class ModelSubclass extends ModelBase {
+public class ModelSubclass {
 
   @JsonProperty("city")
   private String city;
-  @Sensitive
+  @SensitiveLog
   @JsonProperty("zipCode")
   private String zipCode;
 }
